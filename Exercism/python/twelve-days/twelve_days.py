@@ -13,7 +13,6 @@ def recite(start_verse, end_verse):
         11: "eleventh",
         12: "twelfth"
     }
-
     christmas_presents = [
         "and a Partridge in a Pear Tree.",
         "two Turtle Doves",
