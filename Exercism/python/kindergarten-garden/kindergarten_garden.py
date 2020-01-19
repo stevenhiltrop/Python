@@ -8,7 +8,7 @@ class Garden:
         }
 
         if diagram:
-            self.diagram = diagram.rplsit()
+            self.diagram = diagram.rsplit()
         if students:
             self.students = sorted(students)
         else:
@@ -24,6 +24,6 @@ class Garden:
 
         for row in range(2):
             student_plants.append(self.diagram[row][student_index * 2])
-            student_plants.append(self.diagram[row][student_index + 1])
+            student_plants.append(self.diagram[row][student_index * 2 + 1])
 
         return [self.plant[p] for p in student_plants]
