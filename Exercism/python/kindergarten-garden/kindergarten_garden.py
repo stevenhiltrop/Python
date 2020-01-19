@@ -1,8 +1,12 @@
-from enum import Enum
-
-
 class Garden:
     def __init__(self, diagram, students=list()):
+        self.plant = {
+            "G": "Grass",
+            "C": "Clover",
+            "R": "Radishes",
+            "V": "Violets"
+        }
+
         if diagram:
             self.diagram = diagram.rplsit()
         if students:
@@ -14,12 +18,12 @@ class Garden:
                 "Ileana", "Joseph", "Kincaid", "Larry"
             ]
 
-    def plants(self, name):
-        pass
+    def plants(self, student_name):
+        student_index = self.students.index(student_name)
+        student_plants = list()
 
+        for row in range(2):
+            student_plants.append(self.diagram[row][student_index * 2])
+            student_plants.append(self.diagram[row][student_index + 1])
 
-class Plant(Enum):
-    Grass = "G"
-    Clover = "C"
-    Radishes = "R"
-    Violets = "V"
+        return [self.plant[p] for p in student_plants]
