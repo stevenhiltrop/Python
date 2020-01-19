@@ -1,10 +1,6 @@
-import re
+from re import findall
 
 
 def abbreviate(words):
-    acronym = str()
-
-    for word in re.findall(r"[\w']+", words):
-        acronym += ''.join(word[:1].capitalize())
-
-    return acronym.upper()
+    words = words.replace("'", "").title()
+    return ''.join(findall('[A-Z]', words))
