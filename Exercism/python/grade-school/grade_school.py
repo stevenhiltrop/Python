@@ -1,17 +1,12 @@
-import collections
-
-
 class School:
-    def __init__(self, school=""):
-        self.school = collections.defaultdict(list)
-        self.name = school
+    def __init__(self):
+        self.grades = {i: [] for i in range(1, 8)}
 
     def add_student(self, name, grade):
-        self.school[grade].append(name)
+        self.grades[grade].append(name)
 
     def roster(self):
-        school = [self.grade(grade) for grade in sorted(self.school.keys())]
-        return [child for _class in school for child in _class]
+        return [name for grade in self.grades.values() for name in sorted(grade)]
 
     def grade(self, grade_number):
-        return sorted(self.school[grade_number])
+        return sorted(self.grades[grade_number])
