@@ -1,6 +1,7 @@
 class Luhn:
     def __init__(self, card_num):
         self.card_number = card_num.replace(' ', '')
+        self.valid = self.valid()
 
     def checksum(self):
         digits = list(map(int, self.card_number))
@@ -9,7 +10,7 @@ class Luhn:
         return (odd_sum + even_sum) % 10
 
     def valid(self):
-        if self.card_number.isdigit():
+        if self.card_number.isdigit() and self.card_number != "0":
             return self.checksum() == 0
         else:
             return False
