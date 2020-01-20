@@ -4,13 +4,14 @@ class Luhn:
         self.card_number = card_num.replace(' ', '')
 
     def valid(self):
-        numbers = list()
+        if self.card_number.isdigit():
+            numbers = [int(number) for number in self.card_number]
 
-        for number in self.card_number[::2]:
-            double = int(number) * 2
-            if double > 10:
-                numbers.append(double - 9)
-            else:
-                numbers.append(double)
+            for number in numbers[::2]:
+                index = numbers.index(number)
+                double = int(number) * 2
+                numbers[index] = double - 9 if double > 9 else double
 
-        return sum(numbers) % 10 == 0
+            return sum(numbers) % 10 == 0
+        else:
+            return False
