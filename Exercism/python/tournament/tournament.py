@@ -1,4 +1,4 @@
-from collections import OrderedDict
+from operator import attrgetter, methodcaller
 
 
 class Team:
@@ -37,7 +37,9 @@ class Team:
 
 def create_table(teams):
     table = ["Team                           | MP |  W |  D |  L |  P"]
-    for team in teams.values():
+    name_sorted = sorted(teams.values(), key=attrgetter('name'))
+    points_sorted = sorted(name_sorted, key=methodcaller('total_points'), reverse=True)
+    for team in points_sorted:
         table.append(team.name.ljust(31) + '|  ' + ' |  '.join(
             str(team.played) +
             str(team.win) +
@@ -47,6 +49,12 @@ def create_table(teams):
         ))
     return table
 
+
+# return an array of 'rows'
+# name_sorted = sorted(self._teams.values(), key=attrgetter('name'))
+# points_sorted = sorted(name_sorted, key=methodcaller('total_points'), reverse=True)
+# rows.extend([t.format_record() for t in points_sorted])
+# return rows
 
 def tally(rows):
     teams = dict()
@@ -58,7 +66,7 @@ def tally(rows):
     }
 
     for row in rows:
-        team1, team2, outcome = row.split(';')  # "Allegoric Alaskans;Blithering Badgers;win",
+        team1, team2, outcome = row.split(';')
 
         if team1 not in teams:
             teams[team1] = Team(team1)
