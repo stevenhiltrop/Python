@@ -38,7 +38,7 @@ class Team:
 def create_table(teams):
     table = ["Team                           | MP |  W |  D |  L |  P"]
     name_sorted = sorted(teams.values(), key=attrgetter('name'))
-    points_sorted = sorted(name_sorted, key=methodcaller('total_points'), reverse=True)
+    points_sorted = sorted(name_sorted, key=attrgetter('points'), reverse=True)
     for team in points_sorted:
         table.append(team.name.ljust(31) + '|  ' + ' |  '.join(
             str(team.played) +
