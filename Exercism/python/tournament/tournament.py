@@ -1,4 +1,4 @@
-from operator import attrgetter, methodcaller
+from operator import attrgetter
 
 
 class Team:
@@ -50,12 +50,6 @@ def create_table(teams):
     return table
 
 
-# return an array of 'rows'
-# name_sorted = sorted(self._teams.values(), key=attrgetter('name'))
-# points_sorted = sorted(name_sorted, key=methodcaller('total_points'), reverse=True)
-# rows.extend([t.format_record() for t in points_sorted])
-# return rows
-
 def tally(rows):
     teams = dict()
     outcome_mapping = {
@@ -70,13 +64,10 @@ def tally(rows):
 
         if team1 not in teams:
             teams[team1] = Team(team1)
-
         if team2 not in teams:
             teams[team2] = Team(team2)
 
         teams[team1].score(outcome)
         teams[team2].score(outcome_mapping[outcome])
 
-    table = create_table(teams)
-
-    return table
+    return create_table(teams)
