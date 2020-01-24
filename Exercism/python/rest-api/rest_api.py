@@ -29,7 +29,7 @@ class RestAPI:
                 "owed_by": {},
                 "balance": 0.0
             }
-            return json.dumps(self.get(payload=payload))
+            return json.dumps(self.database['users'])
         elif url == "/iou":
             pass
 
