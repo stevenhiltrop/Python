@@ -17,12 +17,12 @@ def total(basket):
         groups.append(books)
 
     # Calculate price
-    bill = 0
-    for group in groups:  # [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2]]
+    purchase_price = 0
+    for group in groups:
         if len(group) in discount:
             percentage = discount[len(group)]
-            bill += len(group) * (price - (price / 100 * percentage))  # 5 x (8 - 2.00) == 5 x 6.00 == $30.00
+            purchase_price += int(len(group) * (price - (price / 100 * percentage)))
         else:
-            bill += len(group) * price
+            purchase_price += int(len(group) * price)
 
-    return bill
+    return purchase_price
