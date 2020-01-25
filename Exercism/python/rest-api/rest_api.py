@@ -31,9 +31,10 @@ class RestAPI:
             self.database["users"][lender]["balance"] += amount
             self.database["users"][borrower]["balance"] -= amount
 
+            #  Owes
             if (iou["borrower"] in self.database["users"][lender]["owes"].keys() and
                     iou["lender"] in self.database["users"][borrower]["owed_by"].keys()):
-                if (self.database["users"][lender]["owes"][iou["borrower"]] > amount):
+                if self.database["users"][lender]["owes"][iou["borrower"]] > amount:
                     self.database["users"][lender]["owes"][iou["borrower"]] -= amount
                     self.database["users"][borrower]["owed_by"][iou["lender"]] -= amount
                 else:
@@ -43,10 +44,14 @@ class RestAPI:
                     if balance > 0:
                         self.database["users"][lender]["owed_by"][iou["borrower"]] = balance
                         self.database["users"][borrower]["owes"][iou["lender"]] = balance
+
+            #  Owed by
             elif (iou["borrower"] in self.database["users"][lender]["owed_by"].keys() and
                   iou["lender"] in self.database["users"][borrower]["owes"].keys()):
                 self.database["users"][lender]["owed_by"][iou["borrower"]] += amount
                 self.database["users"][borrower]["owes"][iou["lender"]] += amount
+
+            #  No amount
             else:
                 self.database["users"][lender]["owed_by"][iou["borrower"]] = amount
                 self.database["users"][borrower]["owes"][iou["lender"]] = amount
