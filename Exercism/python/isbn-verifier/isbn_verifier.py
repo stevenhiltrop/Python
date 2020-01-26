@@ -8,18 +8,19 @@ def is_valid(isbn):
     :return:
     ISBN validation: bool
     """
-    formatted_number = isbn.replace("-", "")
+    isbn = list(isbn.replace('-', ''))
 
-    if len(formatted_number) != 10 or formatted_number[9].isdigit():
+    if len(isbn) != 10:
         return False
 
-    check_sum = sum(int(formatted_number[i]) * (10 - i) for i in range(8))
-    check_sum %= 11
-    check_digit = 11 - check_sum
+    if isbn[-1].upper() == 'X':
+        isbn[-1] = '10'
 
-    if formatted_number.endswith("X"):
-        return check_digit == 10
-    elif formatted_number[-1].isdigit():
-        return check_digit == int(formatted_number[-1])
-    else:
-        return False
+    total = 0
+    for i in range(10):
+        try:
+            total += int(isbn[i]) * (10 - i)
+        except ValueError:
+            return False
+
+    return True if total % 11 == 0 else False
