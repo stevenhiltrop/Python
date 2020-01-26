@@ -1,4 +1,13 @@
-def is_valid(isbn):  # "3-598-21507-A"
+def is_valid(isbn):
+    """
+    Check if the given ISB Number is valid
+
+    :param
+    isbn: string
+
+    :return:
+    ISBN validation: bool
+    """
     formatted_number = isbn.replace("-", "")
 
     if len(formatted_number) != 10 or formatted_number[9].isdigit():
