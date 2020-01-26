@@ -8,11 +8,4 @@ def to_rna(dna_strand):
     :return:
     RNA: string
     """
-    dna_to_rna = (lambda rna: {
-        'C': 'G',
-        'G': 'C',
-        'T': 'A',
-        'A': 'U'
-    }[rna])
-
-    return ''.join(list(map(dna_to_rna, dna_strand)))
+    return dna_strand.translate(str.maketrans("GCTA", "CGAU"))
