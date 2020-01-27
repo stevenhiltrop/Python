@@ -1,7 +1,7 @@
 from itertools import groupby
 
 
-def decode(string):
+def decode(string: str) -> str:
     """
     Decode a run length code
 
@@ -20,7 +20,7 @@ def decode(string):
     return "".join(result)
 
 
-def encode(string):
+def encode(string: str) -> str:
     """
         Encode a long string
 
