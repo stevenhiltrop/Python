@@ -28,6 +28,16 @@ CHOICE = sum
 
 
 def score(dice, category):
+    """
+    Return the score if a valid category is given
+
+    :param
+    dice: list of integers
+    category: constant
+
+    :return:
+    score: int
+    """
     if any(not 0 < x < 7 for x in dice):
         raise ValueError("Invalid dice {}".format(dice))
 
