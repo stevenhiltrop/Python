@@ -1,4 +1,4 @@
-from collections import OrderedDict
+from itertools import groupby
 
 
 def decode(string):
@@ -6,12 +6,13 @@ def decode(string):
 
 
 def encode(string):
-    dictionary = OrderedDict.fromkeys(string, 0)
-    output = ''
+    result = []
 
-    for ch in string:
-        dictionary[ch] += 1
+    for k, i in groupby(string):
+        run = list(i)
+        if len(run) > 2:
+            result.append("{:02}{}".format(len(run), k))
+        else:
+            result.extend(run)
 
-    for key, value in dictionary.items():
-        output = output + str(value) + key
-    return output
+    return "".join(result)
