@@ -1,11 +1,22 @@
-def response(hey_bob):
-    if hey_bob.endswith('?') and hey_bob.isupper():
+def response(hey_bob: str) -> str:
+    """
+    Response of Bob
+
+    :param
+    hey_bob: string
+
+    :return:
+    response: string
+    """
+    ask = hey_bob.replace(' ', '')
+
+    if ask.endswith('?') and ask.isupper():
         return "Calm down, I know what I'm doing!"
-    elif hey_bob.endswith('?'):
+    elif ask.endswith('?'):
         return "Sure."
-    elif hey_bob.isupper():
+    elif ask.isupper():
         return "Whoa, chill out!"
-    elif hey_bob.isspace():
+    elif not ask or ask.isspace():
         return "Fine. Be that way!"
     else:
         return "Whatever."
