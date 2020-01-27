@@ -16,7 +16,7 @@ def response(hey_bob: str) -> str:
         return "Sure."
     elif ask.isupper():
         return "Whoa, chill out!"
-    elif not ask or ask.isspace():
+    elif not ask.strip():
         return "Fine. Be that way!"
     else:
         return "Whatever."
