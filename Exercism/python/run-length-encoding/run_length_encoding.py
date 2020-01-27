@@ -10,8 +10,9 @@ def encode(string):
 
     for k, i in groupby(string):
         run = list(i)
-        if len(run) > 2:
-            result.append("{:02}{}".format(len(run), k))
+        print(len(run))
+        if len(run) > 1:
+            result.append("{0}{1}".format(len(run), k))
         else:
             result.extend(run)
 
