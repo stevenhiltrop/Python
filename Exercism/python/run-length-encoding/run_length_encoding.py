@@ -2,6 +2,15 @@ from itertools import groupby
 
 
 def decode(string):
+    """
+    Decode a run length code
+
+    :param
+    string: str
+
+    :return:
+    result: str
+    """
     result = ""
 
     for index, char in enumerate(string):
@@ -12,6 +21,15 @@ def decode(string):
 
 
 def encode(string):
+    """
+        Encode a long string
+
+        :param
+        string: str
+
+        :return:
+        result: str
+        """
     result = ""
 
     for k, i in groupby(string):
