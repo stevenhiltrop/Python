@@ -10,6 +10,6 @@ def add(moment: datetime) -> datetime:
     moment: datetime.datetime
 
     :return:
-    moment_plus__gigasecond: datetime.datetime
+    moment_plus_gigasecond: datetime.datetime
     """
     return moment + timedelta(0, pow(10, 9))
