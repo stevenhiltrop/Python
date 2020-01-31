@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import date
+
 
 def meetup(year, month, week_of_month, day_of_week):  # Monday = 0 -> Sunday = 6
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -13,9 +14,10 @@ def meetup(year, month, week_of_month, day_of_week):  # Monday = 0 -> Sunday = 6
         "last": 28
     }[week_of_month]
 
-    day = datetime.weekday(week + days.index(day_of_week))
+    day = week + days.index(day_of_week)
 
-    return datetime.date(year, month, day)
+    return date(year, month, day)
+
 
 class MeetupDayException(Exception):
     def __init__(self):
