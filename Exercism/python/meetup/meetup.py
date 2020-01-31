@@ -43,11 +43,11 @@ def meetup(year, month, week, day_of_week):
 
 
 class MeetupDayException(Exception):
-    def __init__(self):
-        raise ValueError("The given input is wrong. Please use: {}".format(help(meetup)))
+    """
+    Custom exception in regards to invalid weekday given.
+    """
 
-# class Week(IntEnum):
-#     FIRST =  1,
-#     SECOND = 8,
-#     THIRD = 15,
-#     FOURTH = LAST = 21
+    def __init__(self):
+        raise ValueError(
+            "{}\nThe given input is wrong. Please use the correct input.".format(help(meetup))
+        )
