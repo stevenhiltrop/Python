@@ -1,5 +1,10 @@
 import calendar
-from datetime import date, timedelta
+from datetime import date
+
+DAYS = [day.lower() for day in calendar.day_name]
+COUNTS = ['1st', '2nd', '3rd', '4th', '5th', 'last', 'teenth']
+LAST = 5
+TEENTH = 6
 
 
 def meetup(year, month, week, day_of_week):
@@ -17,37 +22,29 @@ def meetup(year, month, week, day_of_week):
     :return:
     datetime.date
     """
-    day = {
-        "Monday": calendar.MONDAY,
-        "Tuesday": calendar.TUESDAY,
-        "Wednesday": calendar.WEDNESDAY,
-        "Thursday": calendar.THURSDAY,
-        "Friday": calendar.FRIDAY,
-        "Saturday": calendar.SATURDAY,
-        "Sunday": calendar.SUNDAY
-    }[day_of_week]
+    week = week.lower()
+    day_of_week = day_of_week.lower()
+    try:
+        weekday = DAYS.index(day_of_week)
+        week_index = COUNTS.index(week)
 
-    if week[0].isdigit():
-        month_range = calendar.monthrange(year, month, w=int(week[0]))
-    elif week == "last":
-        month_range = calendar.monthrange(year, month, w=month_range[1])
-    elif week == "teenth":
-        pass
-    else:
-        raise MeetupDayException
-
-    date_corrected = date(year, month, month_range[1])
-    delta = (day - month_range[0]) % 7
-
-    return date_corrected + timedelta(days=delta)
+        if week_index == TEENTH:
+            first_teenth_weekday = calendar.weekday(year, month, 13)
+            delta_days = 12 + (weekday - first_teenth_weekday) % 7
+        else:
+            first_weekday = calendar.weekday(year, month, 1)
+            if week_index == LAST:
+                delta_days = (weekday - first_weekday) % 7
+                delta_days += ((calendar.monthlen(year, month) - delta_days - 1) // 7) * 7
+            else:
+                delta_days = (weekday - first_weekday) % 7 + 7 * week_index
+        return date(year, month, delta_days + 1)
+    except MeetupDayException as exception:
+        raise exception("That date is no good")
 
 
 class MeetupDayException(Exception):
     """
     Custom exception in regards to invalid weekday given.
     """
-
-    def __init__(self):
-        raise ValueError(
-            "{}\nThe given input is wrong. Please use the correct input.".format(help(meetup))
-        )
+    pass
