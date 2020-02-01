@@ -1,33 +1,34 @@
-import calendar
+from calendar import Calendar, day_name
 from datetime import date
 
-DAYS = [day.lower() for day in calendar.day_name]
-COUNTS = ['1st', '2nd', '3rd', '4th', '5th', 'last', 'teenth']
-LAST = 5
-TEENTH = 6
+WEEKDAY_NAMES = dict(zip(day_name, range(0, 7)))
 
 
 class MeetupDayException(Exception):
     pass
 
 
-def meetup(year, month, week, day_of_week):
-    week = week.lower()
-    day_of_week = day_of_week.lower()
-    try:
-        weekday = DAYS.index(day_of_week)
-        week_index = COUNTS.index(week)
+def raise_():
+    raise MeetupDayException("Month specified doesn't have 5th day of week.")
 
-        if week_index == TEENTH:
-            first_teenth_weekday = calendar.weekday(year, month, 13)
-            delta_days = 12 + (weekday - first_teenth_weekday) % 7
-        else:
-            first_weekday = calendar.weekday(year, month, 1)
-            if week_index == LAST:
-                delta_days = (weekday - first_weekday) % 7
-                delta_days += ((calendar.monthlen(year, month) - delta_days - 1) // 7) * 7
-            else:
-                delta_days = (weekday - first_weekday) % 7 + 7 * week_index
-        return date(year, month, delta_days + 1)
-    except:
-        raise MeetupDayException("That date is no good")
+
+def meetup(year, month, week, day_of_week):
+    WEEK_GETTER = {
+        "1st": lambda x: x[0],
+        "2nd": lambda x: x[1],
+        "3rd": lambda x: x[2],
+        "4th": lambda x: x[3],
+        "5th": lambda x: x[4] if len(x) == 5 else raise_(),
+        "last": lambda x: x[-1],
+        "teenth": lambda x: list(filter(lambda y: 13 <= y[2] < 20, x))[0],
+    }
+    cal = Calendar()
+    month_cal = list(
+        filter(
+            lambda x: x[0] == year
+                      and x[1] == month
+                      and x[3] == WEEKDAY_NAMES[day_of_week],
+            cal.itermonthdays4(year, month),
+        )
+    )
+    return date(*WEEK_GETTER[week](month_cal)[:-1])
