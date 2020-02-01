@@ -7,21 +7,11 @@ LAST = 5
 TEENTH = 6
 
 
+class MeetupDayException(Exception):
+    pass
+
+
 def meetup(year, month, week, day_of_week):
-    """
-    Calculate the date of the meetup
-
-    :param
-    year: int
-    month: int
-    week: str
-        "teenth", "1st", "2nd", "3rd", "4th", "5th", "last"
-    day_of_week: str
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-
-    :return:
-    datetime.date
-    """
     week = week.lower()
     day_of_week = day_of_week.lower()
     try:
@@ -39,12 +29,5 @@ def meetup(year, month, week, day_of_week):
             else:
                 delta_days = (weekday - first_weekday) % 7 + 7 * week_index
         return date(year, month, delta_days + 1)
-    except MeetupDayException as exception:
-        raise exception("That date is no good")
-
-
-class MeetupDayException(Exception):
-    """
-    Custom exception in regards to invalid weekday given.
-    """
-    pass
+    except:
+        raise MeetupDayException("That date is no good")
