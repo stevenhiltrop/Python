@@ -11,12 +11,14 @@ def is_armstrong_number(number):
     """
     # Pythonic way
 
-    numbers = list(str(number))
-    total = 0
-    for digit in numbers:
-        total += pow(int(digit), len(numbers))
+    # numbers = list(str(number))
+    # total = 0
+    #
+    # for digit in numbers:
+    #     total += pow(int(digit), len(numbers))
+    #
+    # return True if total == number else False
 
-    return True if total == number else False
 
     # Non-pythonic way
 
@@ -24,3 +26,8 @@ def is_armstrong_number(number):
     # armstrong = lambda digit: pow(int(digit), len(numbers))
     # total = sum(list(map(armstrong, numbers)))
     # return True if total == number else False
+
+
+    # Short version
+
+    return True if sum([pow(int(digit), len(list(str(number)))) for digit in list(str(number))]) == number else False
