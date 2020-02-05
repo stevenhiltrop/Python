@@ -12,10 +12,13 @@ def find_anagrams(word: str, candidates: List[str]) -> List[str]:
     :return:
     anagrams: List[str
     """
-    matches = list()
+    return [candidate for candidate in candidates if
+            candidate.lower() != word.lower() and sorted(candidate.lower()) == sorted(word.lower())]
 
-    for item in candidates:
-        if item.lower() != word.lower() and sorted(item.lower()) == sorted(word.lower()):
-            matches.append(item)
-
-    return matches
+    # matches = list()
+    #
+    # for item in candidates:
+    #     if item.lower() != word.lower() and sorted(item.lower()) == sorted(word.lower()):
+    #         matches.append(item)
+    #
+    # return matches
