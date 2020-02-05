@@ -1,7 +1,7 @@
 from string import ascii_lowercase as lc, ascii_uppercase as uc
 
 
-def rotate(text, key):
+def rotate(text: str, key: int) -> str:
     """
     Rotate given string with key
 
