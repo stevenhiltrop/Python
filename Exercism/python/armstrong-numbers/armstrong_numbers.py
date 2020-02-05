@@ -30,4 +30,4 @@ def is_armstrong_number(number):
 
     # Short version
 
-    return True if sum([pow(int(digit), len(list(str(number)))) for digit in list(str(number))]) == number else False
+    return True if sum([int(digit)**len(list(str(number))) for digit in list(str(number))]) == number else False
