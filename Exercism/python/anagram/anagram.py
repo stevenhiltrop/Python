@@ -15,9 +15,7 @@ def find_anagrams(word: str, candidates: List[str]) -> List[str]:
     matches = list()
 
     for item in candidates:
-        if item.lower() == word.lower():
-            pass
-        elif sorted(item.lower()) == sorted(word.lower()):
+        if item.lower() != word.lower() and sorted(item.lower()) == sorted(word.lower()):
             matches.append(item)
 
     return matches
