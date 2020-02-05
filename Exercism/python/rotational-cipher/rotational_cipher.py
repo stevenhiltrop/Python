@@ -1,2 +1,16 @@
+from string import ascii_lowercase as lc, ascii_uppercase as uc
+
+
 def rotate(text, key):
-    return ''.join(map(lambda c: chr(ord('a') + (ord(c) - ord('a') + key) % 26), text))
+    """
+    Rotate given string with key
+
+    :param
+    text: str
+    key: int
+
+    :return:
+    Encoded string
+    """
+    lookup = str.maketrans(lc + uc, lc[key:] + lc[:key] + uc[key:] + uc[:key])
+    return text.translate(lookup)
