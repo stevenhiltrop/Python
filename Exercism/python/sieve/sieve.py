@@ -8,17 +8,11 @@ def primes(limit: int) -> list:
     :return:
     primes: list
     """
-    if limit >= 2:
-        a = [True] * limit
-        a[0] = a[1] = False
-        prime_numbers = list()
-
-        for (i, is_prime) in enumerate(a):
-            if is_prime:
-                prime_numbers.append(i)
-                for n in range(i * i, limit, i):  # Mark factors non-prime
-                    a[n] = False
-
-        return prime_numbers
-    else:
-        return list()
+    multiples = []
+    prime_numbers = []
+    for i in range(2, limit + 1):
+        for j in range(i * i, limit + 1, i):
+            multiples.append(j)
+        if i not in multiples:
+            prime_numbers.append(i)
+    return prime_numbers
