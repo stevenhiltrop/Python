@@ -12,12 +12,8 @@ def sum_of_multiples(limit: int, multiples: List[int]) -> int:
     :return:
     sum_of_multiples: int
     """
-    multipliers = list()
-
-    for multiplier in multiples:
-        if multiplier != 0:
-            for number in range(1, limit):
-                if number % multiplier == 0:
-                    multipliers.append(number)
-
-    return sum(set(multipliers))
+    return sum({
+        x
+        for multiple in multiples if multiple != 0
+        for x in range(multiple, limit, multiple)
+    })
