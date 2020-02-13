@@ -11,7 +11,7 @@ def sum_of_multiples(limit: int, multiples: List[int]) -> int:
 
     :return:
     sum_of_multiples: int
-    """
+    # """
     return sum({
         x
         for multiple in multiples if multiple != 0
