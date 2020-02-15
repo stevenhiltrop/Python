@@ -11,7 +11,7 @@ def square(number: int) -> int:
     if number <= 0 or 64 < number:
         raise ValueError("Number {} is not between 1 and 64".format(number))
 
-    return int(pow(2, number) / 2)
+    return 1 << (number - 1)  # Bitwise left shift for pow(2, number -1)
 
 
 def total() -> int:
@@ -21,4 +21,4 @@ def total() -> int:
     :return:
     total_grains: int
     """
-    return pow(2, 64) - 1
+    return (1 << 64) - 1  # Bitwise left shift for pow(2, 64) -1
