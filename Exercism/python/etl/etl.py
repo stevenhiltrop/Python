@@ -1,9 +1,19 @@
-def transform(legacy_data: dict):
-    data = dict()
+def transform(legacy_data: dict) -> dict:
+    """
+    Transform current scrabble data to new format
 
-    for score, letters in legacy_data.items():
-        for letter in letters:
-            data[letter] = score
+    :param:
+    legacy_data: dict
 
-# legacy_data = {1: ["A", "E", "I", "O", "U"]}
-# data = {"a": 1, "e": 1, "i": 1, "o": 1, "u": 1}
+    :return:
+    data: dict
+    """
+    return {letter.lower(): score for score, letters in legacy_data.items() for letter in letters}
+
+    # data = dict()
+    #
+    # for score, letters in legacy_data.items():
+    #     for letter in letters:
+    #         data[letter.lower()] = score
+    #
+    # return data
