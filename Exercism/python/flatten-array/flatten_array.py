@@ -1,10 +1,22 @@
-def flatten(iterable):
-    flatten_list = list()
+from typing import List
+
+
+def flatten(iterable: list) -> List[int]:
+    """
+    Get all numbers from a give list
+
+    :param:
+    iterable: list
+
+    :return:
+    flattened_list: List[int]
+    """
+    flattened_list = list()
 
     for element in iterable:
         if isinstance(element, list):
-            flatten_list = flatten_list + flatten(element)
+            flattened_list = flattened_list + flatten(element)
         else:
-            flatten_list.append(element)
+            flattened_list.append(element)
 
-    return sorted(flatten_list)
+    return list(filter(None.__ne__, flattened_list))
