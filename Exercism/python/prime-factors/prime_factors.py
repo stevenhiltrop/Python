@@ -1,6 +1,7 @@
 from typing import List
 
-def factors(value):
+
+def factors(value: int) -> List[int]:
     """
     Finding the prime factors for given value
 
@@ -8,7 +9,7 @@ def factors(value):
     value: int
 
     :return:
-    prime_factors: list
+    prime_factors: List[int]
     """
     i = 2
     prime_factors = []
@@ -18,6 +19,8 @@ def factors(value):
         else:
             value //= i
             prime_factors.append(i)
+
     if value > 1:
         prime_factors.append(value)
+
     return prime_factors
