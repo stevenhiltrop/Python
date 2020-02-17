@@ -1,19 +1,46 @@
-def translate(text):
-    lst = ['sh', 'gl', 'ch', 'ph', 'tr', 'br', 'fr', 'bl', 'gr', 'st', 'sl', 'cl', 'pl', 'fl']
-    vowels = ['a', 'e', 'i', 'o', 'u']
-    text = text.split()
-    for k in range(len(text)):
-        i = text[k]
-        if i[0] in vowels:
-            text[k] = i + 'ay'
-        elif t(i) in lst:
-            text[k] = i[2:] + i[:2] + 'ay'
-        elif not i.isalpha():
-            text[k] = i
-        else:
-            text[k] = i[1:] + i[0] + 'ay'
-    return ' '.join(text)
+VOWELS = "aeiou"
 
 
-def t(str):
-    return str[0] + str[1]
+def translate(text: str) -> str:
+    """
+    Translate text in Pig Latin
+
+    :param:
+    text: str
+
+    :return:
+    pig_latin: str
+    """
+    return " ".join(translate_word(word) for word in text.split(" "))
+
+
+def translate_word(word: str) -> str:
+    """
+    Translate a word to Pig Latin
+
+    :param:
+    word: str
+
+    :return:
+    orderd_word: str
+    """
+    return reorder_word(word) + "ay"
+
+
+def reorder_word(word: str) -> str:
+    """
+    Reorder the word according to Pig Latin rules
+
+    :param:
+    word: str
+
+    :return:
+    orderd_word: str
+    """
+    if word[0] in VOWELS or word[:2] in ("yt", "xr"):
+        return word
+    elif word[:2] == "qu":
+        return word[2:] + word[:2]
+    else:
+        # Place the first consonant to the end and call us recursively!
+        return reorder_word(word[1:] + word[0])
