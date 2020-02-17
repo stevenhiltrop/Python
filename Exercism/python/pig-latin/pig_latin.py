@@ -1,9 +1,10 @@
 def translate(text):
     lst = ['sh', 'gl', 'ch', 'ph', 'tr', 'br', 'fr', 'bl', 'gr', 'st', 'sl', 'cl', 'pl', 'fl']
+    vowels = ['a', 'e', 'i', 'o', 'u']
     text = text.split()
     for k in range(len(text)):
         i = text[k]
-        if i[0] in ['a', 'e', 'i', 'o', 'u']:
+        if i[0] in vowels:
             text[k] = i + 'ay'
         elif t(i) in lst:
             text[k] = i[2:] + i[:2] + 'ay'
