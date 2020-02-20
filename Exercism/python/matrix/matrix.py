@@ -1,9 +1,13 @@
 class Matrix:
     def __init__(self, matrix_string):
-        self.rows = [map(int, r.split()) for r in matrix_string.splitlines()]
+        self.matrix = list()
+
+        for line in matrix_string.splitlines():
+            row = [int(char) for char in line.split() if char.isdigit()]
+            self.matrix.append(row)
 
     def row(self, index):
-        return self.rows[index - 1]
+        return self.matrix[index - 1]
 
     def column(self, index):
-        return [row[index - 1] for row in self.rows]
+        return [row[index - 1] for row in self.matrix]
