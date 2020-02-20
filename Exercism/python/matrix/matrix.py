@@ -1,13 +1,34 @@
+from typing import List
+
+
 class Matrix:
-    def __init__(self, matrix_string):
-        self.matrix = list()
+    """
+    Create a matrix from given input
+    """
 
-        for line in matrix_string.splitlines():
-            row = [int(char) for char in line.split() if char.isdigit()]
-            self.matrix.append(row)
+    def __init__(self, matrix_string: str):
+        self.matrix = [[int(char) for char in line.split()] for line in matrix_string.splitlines()]
 
-    def row(self, index):
+    def row(self, index: int) -> List[int]:
+        """
+        Get the row at given index
+
+        :param:
+        index: int
+
+        :return:
+        row: List[int]
+        """
         return self.matrix[index - 1]
 
-    def column(self, index):
+    def column(self, index: int) -> List[int]:
+        """
+        Get the column at given index
+
+        :param
+        index: int
+
+        :return:
+        column: List[int]
+        """
         return [row[index - 1] for row in self.matrix]
