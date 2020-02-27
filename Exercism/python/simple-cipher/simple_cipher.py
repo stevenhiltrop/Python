@@ -1,18 +1,29 @@
-import string
+from itertools import cycle
+from random import choices
+from string import ascii_lowercase
+
+letter_indices = {letter: index for index, letter in enumerate(ascii_lowercase)}
 
 
-class Cipher:
+class Cipher(object):
     def __init__(self, key=None):
-        self.key = string.ascii_lowercase.index(key[0]) if key else 3
-        self.alphabet = string.ascii_lowercase
-        self.shifted_alphabet = self.alphabet[self.key:] + self.alphabet[:self.key]
+        if key is None:
+            key = ''.join(choices(ascii_lowercase, k=256))
+        if set(key).difference(ascii_lowercase):
+            raise ValueError
+        self.key = key
 
-    def encode(self, text):
-        table = str.maketrans(self.alphabet, self.shifted_alphabet)
-        self.key = text.translate(table)
-        return self.key
+    def _matchup(self, phrase):
+        return zip(cycle(self.key), filter(str.isalpha, phrase.lower()))
 
-    def decode(self, text):
-        table = str.maketrans(self.shifted_alphabet, self.alphabet)
-        self.key = text.translate(table)
-        return self.key
+    def encode(self, phrase):
+        return ''.join(
+            ascii_lowercase[(letter_indices[p] + letter_indices[k]) % 26]
+            for k, p in self._matchup(phrase)
+        )
+
+    def decode(self, phrase):
+        return ''.join(
+            ascii_lowercase[(letter_indices[p] - letter_indices[k]) % 26]
+            for k, p in self._matchup(phrase)
+        )
