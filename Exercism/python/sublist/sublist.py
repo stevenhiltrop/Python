@@ -1,10 +1,10 @@
-SUBLIST = None
-SUPERLIST = None
-EQUAL = None
-UNEQUAL = None
+SUBLIST = 0
+SUPERLIST = 1
+EQUAL = 2
+UNEQUAL = 3
 
 
-def sublist(list_one: list, list_two: list) -> [SUPERLIST, SUBLIST, EQUAL, UNEQUAL]:
+def sublist(list_one, list_two):
     """
     Check if the given lists are sublist, superlist, equal lists or is unequal from eachother.
 
@@ -15,12 +15,16 @@ def sublist(list_one: list, list_two: list) -> [SUPERLIST, SUBLIST, EQUAL, UNEQU
     :return:
     list_type: bool
     """
-    if all(item in list_two for item in list_one):
+    A = ','.join([str(element) for element in list_one])
+    B = ','.join([str(element) for element in list_two])
+
+    if A == B:
+        return EQUAL
+
+    if A in B:
         return SUBLIST
-    elif all(item in list_one for item in list_two):
+
+    if B in A:
         return SUPERLIST
 
-    if set(list_one) == set(list_two):
-        return EQUAL
-    else:
-        return UNEQUAL
+    return UNEQUAL
