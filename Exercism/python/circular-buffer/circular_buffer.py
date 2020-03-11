@@ -48,9 +48,9 @@ class CircularBuffer:
         :param:
         data: str
         """
-        if len(self.buffer) > self.capacity:
+        if len(self.buffer) == self.capacity:
             self.buffer.pop(0)
-        self.buffer.append(data)
+        self.write(data)
 
     def clear(self):
         """
