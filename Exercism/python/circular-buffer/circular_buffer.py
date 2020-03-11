@@ -1,23 +1,33 @@
 class BufferFullException(Exception):
-    pass
+    def __init__(self):
+        raise BufferError("Buffer is full.")
 
 
 class BufferEmptyException(Exception):
-    pass
+    def __init__(self):
+        raise BufferError("Buffer is empty.")
 
 
 class CircularBuffer:
     def __init__(self, capacity):
-        pass
+        self.buffer = list()
+        self.capacity = capacity
 
     def read(self):
-        pass
+        try:
+            return self.buffer.pop(0)
+        except BufferEmptyException:
+            return BufferEmptyException()
 
     def write(self, data):
-        pass
+        if len(self.buffer) < self.capacity:
+            self.buffer.append(data)
+        else:
+            raise BufferFullException()
 
     def overwrite(self, data):
-        pass
+        self.buffer.pop(0)
+        self.buffer.append(data)
 
     def clear(self):
-        pass
+        self.buffer.clear()
