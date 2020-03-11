@@ -1,17 +1,19 @@
-from math import sqrt
-
-
 def triplets_with_sum(number):
-    divisors = [num for num in range(1, number + 1) if number % num == 0]
-    middle_element = int(len(divisors) / 2)
-    a, b = pow(middle_element, 2), pow(middle_element + 1, 2)
-    return a + b if is_triplet([a, b, a + b]) else list()
+    return [t for t in triplets_in_range(1, number) if sum(t) == number]
 
 
 def triplets_in_range(start, end):
-    pass
+    triplets = []
+
+    for n in range(start, end - 3):
+        for m in range(n + 1, end - 2):
+            triplet = [n, m, end - n - m]
+
+            if is_triplet(triplet):
+                triplets.append(triplet)
+
+    return triplets
 
 
 def is_triplet(triplet):
-    root = sqrt(triplet[0] + triplet[1])
-    return int(root + 0.5) ** 2 == triplet[2]
+    return triplet[0] ** 2 + triplet[1] ** 2 == triplet[2] ** 2 and triplet[0] < triplet[1] < triplet[2]
