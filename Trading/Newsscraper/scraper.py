@@ -19,7 +19,9 @@ for ticker in whisper_tickers:
     tickers += "{} ".format(ticker.text)
 
 # TODO 2. Get financial data through API calls
-
+# https://github.com/ranaroussi/yfinance
 tickers = yf.Tickers(tickers)
 
-# TODO 3. Make conclusions
+# TODO 3. Set filter criteria
+
+# TODO 4. Make conclusions
