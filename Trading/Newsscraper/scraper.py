@@ -1,11 +1,26 @@
 # -*- coding: utf-8 -*-
 from urllib.request import urlopen
 
-import yfinance as yf
+import yfinance
 from bs4 import BeautifulSoup
 from termcolor import colored
 
 tickers = str()
+stocks = list()
+
+
+def create_dataframe(stock):
+    result = dict()
+    value = stock.get("previousClose")
+    volume = stock.get("volume")
+    float = stock.get("floatShares")
+    marketcap = stock.get("marketCap")
+
+    if 1000000 < volume < 1000000:
+        result["volume"] = colored(volume, "green")
+    else:
+        result["volume"] = colored(volume, "red")
+
 
 # TODO 1. Get all earningreport tickers
 
@@ -15,6 +30,7 @@ print(colored("[-] Connecting to earningswhispers.com...", "yellow"))
 
 with urlopen(source) as response:
     page = response.read()
+
 if page:
     print(colored("[+] Success!", "green"))
     soup = BeautifulSoup(page, 'html.parser')
@@ -24,24 +40,25 @@ if page:
     for ticker in whisper_tickers:
         tickers += "{} ".format(ticker.text)
     print(colored("[+] Tickers: {}", "green").format(tickers.replace(" ", ", ")))
+
     # TODO 2. Get financial data through API calls
+    ticker = yfinance.Tickers(tickers)
     # https://github.com/ranaroussi/yfinance
 
-    print(colored("[-] Getting information on each ticker (this might take a while)", "yellow"))
-    data = yf.download(tickers, start="2017-01-01", end="2017-04-30", group_by="ticker")
+    # print(colored("[-] Downloading ticker data", "yellow"))
+    # data = yf.download(tickers, period="1d", group_by="ticker")
+    # print(colored("[+] Done!", "green"))
 
-    # print(colored("[-] Getting information on each ticker (this might take a while)", "yellow"))
-    # for ticker in tickers.tickers:
-    #     ticker = ticker.info
-    #
-    #     value = ticker.get("previousClose")
-    #     volume = ticker.get("volume")
-    #     float = ticker.get("floatShares")
-    #     marketcap = ticker.get("marketCap")
+    print(colored("[-] Getting information on each ticker (this might take a while)", "yellow"))
+    for ticker in tickers.tickers:
+        stocks.append(ticker.info)
 
 # TODO 3. Set filter criteria
+    # check_criteria()
+
 
 # TODO 4. Make conclusions
+    # create_dataframe(ticker)
 
 else:
     print(colored("[X] Could not scrape website", "red"))
