@@ -23,18 +23,34 @@ def get_stock_information(stock):
     result = dict()
     try:
         result["name"] = stock.ticker
-        result["price"] = stock.info.get("previousClose")
-        result["float"] = stock.info.get("floatShares")
-        result["volume"] = stock.info.get("volume")
-        result["marketcap"] = stock.info.get("marketCap")
+
+        # Price
+        if 5 < stock.info.get('previousClose') < 100:
+            result["price"] = colored(f"{human_format(stock.info.get('previousClose'))}", "green")
+        else:
+            result["price"] = colored(f"{human_format(stock.info.get('previousClose'))}", "red")
+        # Float
+        if stock.info.get("floatShares") < 2000000:
+            result["float"] = colored(f"{human_format(stock.info.get('floatShares'))}", "green")
+        else:
+            result["float"] = colored(f"{human_format(stock.info.get('floatShares'))}", "red")
+        # Volume
+        if 1000000 < stock.info.get('volume') < 10000000:
+            result["volume"] = colored(f"{human_format(stock.info.get('volume'))}", "green")
+        else:
+            result["volume"] = colored(f"{human_format(stock.info.get('volume'))}", "red")
+        # Market Cap
+        if stock.info.get("marketCap") < 100000000:
+            result["marketcap"] = colored(f"{human_format(stock.info.get('marketCap'))}", "green")
+        else:
+            result["marketcap"] = colored(f"{human_format(stock.info.get('marketCap'))}", "red")
+
         print(colored(f"{stock.ticker} done.", "green"))
     except:
         print(colored(f"{stock.ticker} failed.", "red"))
 
-    # if 5 < result["price"] < 100:
-    #     result["price"] = colored(f"{} done.", "green")
-
     return result
+
 
 print(colored("[-] Connecting to earningswhispers.com...", "yellow"))
 
@@ -58,10 +74,6 @@ if page:
         ticker = get_stock_information(ticker)
         stocks.append(ticker)
 
-    # TODO 3. Set filter criteria
-
-
-    # TODO 4. Make conclusions
     print(pandas.DataFrame(stocks).to_string(index=False))
 
 else:
