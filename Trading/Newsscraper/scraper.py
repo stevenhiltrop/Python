@@ -46,10 +46,10 @@ def get_stock_information(stock):
             result["marketcap"] = colored(f"{human_format(stock.info.get('marketCap'))}", "red")
 
         print(colored(f"{stock.ticker} done.", "green"))
+
+        return result
     except:
         print(colored(f"{stock.ticker} failed.", "red"))
-
-    return result
 
 
 print(colored("[-] Connecting to earningswhispers.com...", "yellow"))
@@ -72,9 +72,10 @@ if page:
     print(colored("[-] Getting information on each ticker (this might take a while)", "yellow"))
     for ticker in tickers.tickers:
         ticker = get_stock_information(ticker)
-        stocks.append(ticker)
+        if ticker:
+            stocks.append(ticker)
 
-    print(pandas.DataFrame(stocks).to_string(index=False))
+    print(pandas.DataFrame(stocks).to_string(header="name", index=False, justify="justify-all"))
 
 else:
     print(colored("[X] Could not scrape website", "red"))
