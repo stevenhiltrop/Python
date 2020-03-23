@@ -8,18 +8,17 @@ def classify(number: int) -> str:
     :return:
     classification: str
     """
-    if 0 < number and type(number) is int:
-        aliquots = list()
-        for i in range(1, number):
-            if divmod(number, i)[1] == 0:
-                aliquots.append(i)
-
-        if sum(aliquots) == number:
-            return "perfect"
-        elif sum(aliquots) > number:
-            return "abundant"
-        elif sum(aliquots) < number:
-            return "deficient"
-
-    else:
+    if type(number) is not int or number <= 0:
         raise ValueError("Not a natural number.")
+
+    aliquots = list()
+    for i in range(1, number):
+        if divmod(number, i)[1] == 0:
+            aliquots.append(i)
+
+    if sum(aliquots) == number:
+        return "perfect"
+    elif sum(aliquots) > number:
+        return "abundant"
+    elif sum(aliquots) < number:
+        return "deficient"
