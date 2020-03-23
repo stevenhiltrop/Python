@@ -13,7 +13,7 @@ def classify(number: int) -> str:
 
     aliquots = list()
     for i in range(1, number):
-        if divmod(number, i)[1] == 0:
+        if number % i == 0:
             aliquots.append(i)
 
     if sum(aliquots) == number:
