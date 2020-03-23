@@ -11,10 +11,7 @@ def classify(number: int) -> str:
     if type(number) is not int or number <= 0:
         raise ValueError("Not a natural number.")
 
-    aliquots = list()
-    for i in range(1, number):
-        if number % i == 0:
-            aliquots.append(i)
+    aliquots = [i for i in range(1, number) if number % i == 0]
 
     if sum(aliquots) == number:
         return "perfect"
