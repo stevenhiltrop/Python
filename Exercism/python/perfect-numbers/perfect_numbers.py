@@ -22,4 +22,4 @@ def classify(number: int) -> str:
             return "deficient"
 
     else:
-        return ValueError("Not a natural number.")
+        raise ValueError("Not a natural number.")
