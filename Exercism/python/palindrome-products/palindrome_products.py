@@ -1,41 +1,15 @@
-def get_factors(value: int) -> list:
+def smallest(max_factor: int, min_factor=0) -> tuple:
     """
-    Get factors from given value
-
-    :param
-    value: int
-
-    :return:
-    factors: list
-    """
-    return list([divmod(value, number)[0], number] for number in range(1, value + 1) if value % number == 0)
-
-
-def get_palindromes(products: list) -> list:
-    """
-    Get palindromes out of a given list of numbers
-
-    :param:
-    products: list
-
-    :return:
-    list
-    """
-    return list(number for number in products if str(number) == str(number)[::-1])
-
-
-def get_products(max_factor: int, min_factor: int) -> list:
-    """
-    Calculate the products of a given range of numbers
+    Largest palindrome
 
     :params:
     max_factor: int
-    min_factor: int
+    min_factor: int [default=0]
 
     :return:
-    products: list
+    largest_palindrome: tuple
     """
-    return list(set(i * j for i in range(min_factor, max_factor + 1) for j in range(min_factor, max_factor + 1)))
+    return palindrome(min_factor, max_factor)
 
 
 def largest(max_factor: int, min_factor=0) -> tuple:
@@ -49,23 +23,15 @@ def largest(max_factor: int, min_factor=0) -> tuple:
     :return:
     largest_palindrome: tuple
     """
-    products = get_products(max_factor, min_factor)
-    palindromes = get_palindromes(products)
+    return palindrome(min_factor, max_factor, smallest=False)
 
 
-def smallest(max_factor: int, min_factor=0) -> tuple:
-    """
-    Largest palindrome
+def palindrome(mn, mx, smallest=True):
+    args = (mn ** 2, mx ** 2 + 1) if smallest else (mx ** 2, mn ** 2 - 1, -1)
 
-    :params:
-    max_factor: int
-    min_factor: int [default=0]
-
-    :return:
-    largest_palindrome: tuple
-    """
-    products = get_products(max_factor + 1, min_factor)
-    palindromes = get_palindromes(products)
-    value = min(palindromes)
-    factors = get_factors(value)
-    return tuple(value, factors)
+    for r in range(*args):
+        s = str(r)
+        if s == s[::-1] and any(mn <= r // j <= mx for j in range(mn, mx + 1) if r % j == 0):
+            return r, ((i, r // i) for i in range(mn, mx + 1) if r % i == 0 and mn <= i <= r // i <= mx)
+    else:
+        raise ValueError('Could not calculate palindrome for these parameters')
