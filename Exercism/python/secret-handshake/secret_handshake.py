@@ -1,16 +1,10 @@
 def commands(number):
     binary = f'{number:b}'
     secrets = list()
-    reverse = False
+    handshakes = ["wink", "double blink", "close your eyes", "jump"]
 
-    if len(binary) >= 5 and binary:
-        reverse = True
+    for index, char in enumerate(binary[-4:]):
+        if char == 1:
+            secrets.append(handshakes[index])
 
-    binary = binary[-4:]
-
-    for index, char in enumerate(binary):
-        if char
-    1 = "wink"
-    10 = "double blink"
-    100 = "close your eyes"
-    1000 = "jump"
+    return reversed(secrets) if len(binary) >= 5 and binary else secrets
