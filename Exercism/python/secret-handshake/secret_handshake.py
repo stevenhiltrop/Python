@@ -1,4 +1,16 @@
-def commands(number):
+from typing import List
+
+
+def commands(number: int) -> List[str]:
+    """
+    Get the secret handshake code
+
+    :param:
+    number: int
+
+    :return:
+    commands: List[str]
+    """
     binary = f'{number:b}'
     secrets = list()
     handshakes = ["wink", "double blink", "close your eyes", "jump"]
