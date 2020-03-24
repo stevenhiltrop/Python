@@ -12,11 +12,6 @@ def commands(number: int) -> List[str]:
     commands: List[str]
     """
     binary = f'{number:b}'
-    secrets = list()
     handshakes = ["wink", "double blink", "close your eyes", "jump"]
-
-    for index, char in enumerate(reversed(binary[-4:])):
-        if char == '1':
-            secrets.append(handshakes[index])
-
+    secrets = [handshakes[index] for index, char in enumerate(reversed(binary[-4:])) if char == '1']
     return list(reversed(secrets)) if len(binary) >= 5 and binary else secrets
