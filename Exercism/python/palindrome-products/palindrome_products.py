@@ -26,7 +26,18 @@ def largest(max_factor: int, min_factor=0) -> tuple:
     return palindrome(min_factor, max_factor, smallest=False)
 
 
-def palindrome(mn, mx, smallest=True):
+def palindrome(mn: int, mx: int, smallest=True) -> list:
+    """
+    Get the product of palindromes
+
+    :params:
+    mn: int
+    mx: int
+    smallest: bool
+
+    :return:
+    palindromes: list
+    """
     args = (mn ** 2, mx ** 2 + 1) if smallest else (mx ** 2, mn ** 2 - 1, -1)
 
     for r in range(*args):
