@@ -52,8 +52,8 @@ class Queen:
                     (self.row + i, self.column + i),
                     (self.row + i, self.column - i),
                     (self.row - i, self.column + i),
-                    (self.row - i, self.column - i)]
-                )
+                    (self.row - i, self.column - i)
+                ])
 
             return True if (row, column) in candidates else False
 
