@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def saddle_points(matrix: list) -> set:
     """
     Returns the list of all saddle points of the input matrix
@@ -11,13 +8,16 @@ def saddle_points(matrix: list) -> set:
     :return:
 
     """
-    if len(set(map(len, matrix))) > 1:
-        raise ValueError
+    if any(len(row) != len(matrix[0]) for row in matrix):
+        raise ValueError("We need a regular matrix")
 
-    mt = list(zip(*matrix))
-    points = set()
-    for i, row in enumerate(matrix):
-        for j, x in enumerate(row):
-            if x == max(row) and x == min(mt[j]):
-                points.add((i, j))
-    return points
+    row_maxs = [max(row) for row in matrix]
+    col_mins = [min(col) for col in zip(*matrix)]
+
+    saddle = [
+        {"row": row, "column": column}
+        for row, row_max in enumerate(row_maxs, start=1)
+        for column, col_min in enumerate(col_mins, start=1)
+        if row_max == col_min
+    ]
+    return saddle or [{}]
