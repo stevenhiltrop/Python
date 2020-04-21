@@ -6,7 +6,7 @@ def saddle_points(matrix: list) -> set:
     matrix: list
 
     :return:
-
+    saddle_points: list
     """
     if any(len(row) != len(matrix[0]) for row in matrix):
         raise ValueError("We need a regular matrix")
