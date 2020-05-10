@@ -1,49 +1,28 @@
-import re
-
-
-def add(numbers):
-    return sum(numbers)
-
-
-def subtract(numbers):
-    return numbers[0] - numbers[1]
-
-
-def multiply(numbers):
-    return pow(numbers)
-
-
-def divide(numbers):
-    return numbers[0] / numbers[1]
-
-
-def contains_digits(d):
-    _digits = re.compile('\d')
-    return bool(_digits.search(d))
+from operator import add, mul, truediv as div, sub
 
 
 def answer(question):
-    words = question.replace('?', '').split()
-    actions = list()
+    solution = 0
     operators = {
-        "plus": add,
-        "minus": subtract,
-        "multiplied": multiply,
-        "divided": divide
+        '+': add,
+        '-': sub,
+        '/': div,
+        '*': mul
     }
+    question_str = question.strip("What is ").strip("?").replace(
+        'plus', '+').replace('minus', '-').replace('divided by', '/').replace('multiplied by', '*')
+    question_list = question_str.split()
+    question_list.reverse()
 
-    for word in words:
-        if contains_digits(word):
-            actions.append(int(word))
-        elif word in operators:
-            actions.append(word)
+    try:
+        first = int(question_list.pop())
+        while question_list:
+            operator = question_list.pop()
+            second = int(question_list.pop())
+            solution = operators[operator](first, second)
 
-    if len(actions) == 1:
-        return actions.pop()
-    if 1 < len(actions):
-        solution = 0
-        number = actions.pop(0)
-        for action in actions:
-            number_to_be_calculated = actions.pop(1)
-            solution = operators[action]([number, number_to_be_calculated])
-        return solution
+            first = solution
+    except ValueError:
+        raise ValueError
+
+    return int(solution)
