@@ -1,28 +1,32 @@
-from operator import add, mul, truediv as div, sub
+"""
+Exercism solution for "wordy"
+"""
+import operator
+import re
+from collections import deque
+
+OPS = {
+    "plus": operator.add,
+    "minus": operator.sub,
+    "multiplied by": operator.mul,
+    "divided by": operator.truediv,
+    "to the power of": operator.pow,
+}
+INTS = re.compile(r"\s*(-?(?=\d)\d+)\s*")
 
 
-def answer(question):
-    solution = 0
-    operators = {
-        '+': add,
-        '-': sub,
-        '/': div,
-        '*': mul
-    }
-    question_str = question.strip("What is ").strip("?").replace(
-        'plus', '+').replace('minus', '-').replace('divided by', '/').replace('multiplied by', '*')
-    question_list = question_str.split()
-    question_list.reverse()
-
-    try:
-        first = int(question_list.pop())
-        while question_list:
-            operator = question_list.pop()
-            second = int(question_list.pop())
-            solution = operators[operator](first, second)
-
-            first = solution
-    except ValueError:
-        raise ValueError
-
-    return int(solution)
+def answer(question: str) -> int:
+    """
+    Given a wordy question, calculate the answer.
+    """
+    ops = deque(INTS.split(question))
+    if ops[0] != "What is" or ops[-1] != "?":
+        raise ValueError("Improperly phrased question.")
+    ops.popleft()
+    accum = int(ops.popleft())
+    while ops[0] != "?":
+        try:
+            accum = OPS[ops.popleft()](accum, int(ops.popleft()))
+        except KeyError:
+            raise ValueError("Unrecognized operator!")
+    return accum
