@@ -8,15 +8,18 @@ def validate(number: str) -> bool:
 
     if 2 > int(n_digit) or not n_digit.isdigit() or not x_digit.isdigit():
         raise ValueError
-    else:
-        return number
 
 
 class PhoneNumber:
+    # TODO: validation
     def __init__(self, number):
-        digits = filter_numbers(number)
-        country_code = digits[:1] if digits.startswith('1') else None
+        self.digits = filter_numbers(number)
+        self.country_code = self.digits[:1] if self.digits.startswith('1') else None
+        self.area_code = self.number[:3]
 
-        self.number = digits[1:] if country_code else digits
-        self.area_code = validate(self.number[:3])
-        self.pretty = f"({self.area_code}) {number[3:6]}-{number[6:]}"
+    @property
+    def number(self):
+        return self.digits[1:] if self.country_code else self.digits
+
+    def pretty(self):
+        return f"({self.area_code}) {self.number[3:6]}-{self.number[6:]}"
