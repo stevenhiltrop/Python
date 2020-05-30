@@ -1,6 +1,3 @@
-"""
-Exercism solution for "wordy"
-"""
 import operator
 import re
 from collections import deque
@@ -18,15 +15,21 @@ INTS = re.compile(r"\s*(-?(?=\d)\d+)\s*")
 def answer(question: str) -> int:
     """
     Given a wordy question, calculate the answer.
+
+    :param
+    question: str
+
+    :return:
+    result: int
     """
     ops = deque(INTS.split(question))
     if ops[0] != "What is" or ops[-1] != "?":
         raise ValueError("Improperly phrased question.")
     ops.popleft()
-    accum = int(ops.popleft())
+    result = int(ops.popleft())
     while ops[0] != "?":
         try:
-            accum = OPS[ops.popleft()](accum, int(ops.popleft()))
+            result = OPS[ops.popleft()](result, int(ops.popleft()))
         except KeyError:
             raise ValueError("Unrecognized operator!")
-    return accum
+    return result
