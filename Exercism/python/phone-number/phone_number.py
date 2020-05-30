@@ -1,7 +1,3 @@
-def filter_numbers(number: str) -> str:
-    return ''.join(filter(str.isdigit, number))
-
-
 def validate(number: str) -> bool:
     n_digit = number[:1]
     x_digit = number[1:]
@@ -13,7 +9,7 @@ def validate(number: str) -> bool:
 class PhoneNumber:
     # TODO: validation
     def __init__(self, number):
-        self.digits = filter_numbers(number)
+        self.digits = ''.join(filter(str.isdigit, number))
         self.country_code = self.digits[:1] if self.digits.startswith('1') else None
         self.area_code = self.number[:3]
 
