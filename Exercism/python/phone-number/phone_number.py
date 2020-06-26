@@ -15,7 +15,7 @@ class PhoneNumber(object):
     def __init__(self, phone_number):
         try:
             self.area_code, self.exchange, self.subscriber = \
-                    self._pattern.search(phone_number.strip()).groups()
+                self._pattern.search(phone_number.strip()).groups()
         except AttributeError:
             raise ValueError('Invalid `phone_number`')
 
