@@ -24,4 +24,4 @@ class PhoneNumber(object):
         return self.area_code + self.exchange + self.subscriber
 
     def pretty(self):
-        return '({}) {}-{}'.format(self.area_code, self.exchange, self.subscriber)
+        return f'({self.area_code}) {self.exchange}-{self.subscriber}'
