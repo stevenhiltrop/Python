@@ -35,4 +35,4 @@ def scalene(sides):
     is_scalene: bool
     """
     a, b, c = sides
-    return (a + b < c) and (a + c < b) and (b + c < a) and len(set(sides)) == 3
+    return len(set(sides)) == 3  # or (a + b < c) or (a + c < b) or (b + c < a)
