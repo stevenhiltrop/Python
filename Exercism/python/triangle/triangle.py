@@ -25,4 +25,14 @@ def isosceles(sides):
 
 
 def scalene(sides):
-    pass
+    """
+    A scalene triangle has all sides of different lengths
+
+    :param
+    sides: list
+
+    :return
+    is_scalene: bool
+    """
+    a, b, c = sides
+    return (a + b < c) and (a + c < b) and (b + c < a) and len(set(sides)) == 3
