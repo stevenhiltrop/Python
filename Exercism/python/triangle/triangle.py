@@ -1,4 +1,17 @@
-def equilateral(sides):
+def valid(function):
+    """
+    Check if sum of 2 sides are biger then the other
+    Example:
+        (a + b < c) or (a + c < b) or (b + c < a)
+
+    :param
+    function:
+    """
+    return lambda side: all(side) and 2 * max(side) < sum(side) and function(side)
+
+
+@valid
+def equilateral(sides: list) -> bool:
     """
     An equilateral triangle has all three sides the same length
 
@@ -11,7 +24,8 @@ def equilateral(sides):
     return len(set(sides)) == 1 and 0 not in set(sides)
 
 
-def isosceles(sides):
+@valid
+def isosceles(sides: list) -> bool:
     """
     An isosceles triangle has at least two sides the same length
 
@@ -21,10 +35,11 @@ def isosceles(sides):
     :return
     is_isosceles: bool
     """
-    return len(set(sides)) <= 2 and 1 not in set(sides)
+    return len(set(sides)) < 3
 
 
-def scalene(sides):
+@valid
+def scalene(sides: list) -> bool:
     """
     A scalene triangle has all sides of different lengths
 
@@ -34,5 +49,4 @@ def scalene(sides):
     :return
     is_scalene: bool
     """
-    a, b, c = sides
-    return len(set(sides)) == 3  # or (a + b < c) or (a + c < b) or (b + c < a)
+    return len(set(sides)) == 3
