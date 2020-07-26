@@ -2,12 +2,12 @@ def valid(function):
     """
     Check if sum of 2 sides are biger then the other
     Example:
-        (a + b < c) or (a + c < b) or (b + c < a)
+        (a + b > c) or (a + c > b) or (b + c > a)
 
     :param
     function:
     """
-    return lambda side: all(side) and 2 * max(side) < sum(side) and function(side)
+    return lambda sides: all(sides) and 2 * max(sides) < sum(sides) and function(sides)
 
 
 @valid
@@ -21,7 +21,7 @@ def equilateral(sides: list) -> bool:
     :return
     is_equilateral: bool
     """
-    return len(set(sides)) == 1 and 0 not in set(sides)
+    return len(set(sides)) == 1
 
 
 @valid
