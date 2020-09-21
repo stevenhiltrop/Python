@@ -23,5 +23,25 @@ class Edge:
 
 
 class Graph:
+    # g = Graph([
+    #             (NODE, "a", {"color": "green"})
+    #         ])
     def __init__(self, data=None):
-        pass
+        self.nodes = list()
+        self.edges = list()
+        self.attrs = dict()
+
+        if data is list and data:
+            for item in data:
+                type = item[0]
+
+                if type is NODE:
+
+                    self.nodes.append(Node(item[1], item[2]))
+                if type is EDGE:
+                    self.edges.append(Edge(item[1], item[2], item[3]))
+                if type is ATTR:
+                    self.attrs[item[1]] = item[2]
+        else:
+            raise TypeError("Malformed graph")
+
