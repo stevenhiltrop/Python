@@ -1,8 +1,18 @@
 NODE, EDGE, ATTR = range(3)
 
 
-class Node:
-    def __init__(self, name, attrs):
+class Component(object):
+    _schema = NotImplemented
+
+    @classmethod
+    def validate(cls, args):
+        return all(isinstance(a, t) for a, t in zip(args, cls._schema))
+
+
+class Node(Component):
+    _schema = (str, (dict, set))
+
+    def __init__(self, name, attrs={}):
         self.name = name
         self.attrs = attrs
 
@@ -10,8 +20,10 @@ class Node:
         return self.name == other.name and self.attrs == other.attrs
 
 
-class Edge:
-    def __init__(self, src, dst, attrs):
+class Edge(Component):
+    _schema = (str, str, dict)
+
+    def __init__(self, src, dst, attrs={}):
         self.src = src
         self.dst = dst
         self.attrs = attrs
@@ -22,30 +34,50 @@ class Edge:
                 self.attrs == other.attrs)
 
 
-class Graph:
-    def __init__(self, data=None):
-        self.nodes = list()
-        self.edges = list()
-        self.attrs = dict()
+class Attr(Component):
+    _schema = (str, str)
 
-        if data is list and data:
-            for item in data:
-                graph_type = item[0]
+    def __init__(self, key, value):
+        self.kv = (key, value)
 
-                if graph_type is NODE:
-                    if dict() in item:
-                        self.nodes.append(Node(item[1], item[2]))
-                    else:
-                        raise TypeError("Malformed node")
-                if graph_type is EDGE:
-                    if dict() in item:
-                        self.edges.append(Edge(item[1], item[2], item[3]))
-                    else:
-                        raise TypeError("Malformed edge")
-                if graph_type is ATTR:
-                    if len(item) == 3:
-                        self.attrs[item[1]] = item[2]
-                    else:
-                        ValueError("Malformed attribute")
-        else:
-            raise TypeError("Malformed graph")
+
+class Graph(object):
+    def __init__(self, data=[]):
+        if not self._validate(data):
+            raise TypeError('Invalid DSL')
+
+        self._nodes, self._edges, self._attrs = [], [], []
+
+        self._graph = {
+            NODE: (Node, self._nodes),
+            EDGE: (Edge, self._edges),
+            ATTR: (Attr, self._attrs),
+        }
+
+        for directive in data:
+            componenet, args = directive[0], directive[1:]
+
+            try:
+                cls, storage = self._graph[componenet]
+            except KeyError:
+                raise ValueError('Unknown graph component `{}`'.format(componenet))
+
+            if not cls.validate(args):
+                raise ValueError('Invalid {}'.format(cls.__name__))
+
+            storage.append(cls(*args))
+
+    def _validate(self, data):
+        return all(isinstance(x, tuple) and len(x) > 0 for x in data)
+
+    @property
+    def nodes(self):
+        return self._nodes
+
+    @property
+    def edges(self):
+        return self._edges
+
+    @property
+    def attrs(self):
+        return dict(a.kv for a in self._attrs)
