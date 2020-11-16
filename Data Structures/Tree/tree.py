@@ -1,13 +1,13 @@
 class Node:
     def __init__(self, letter):
-        self.childleft = None
-        self.childright = None
-        self.nodedata = letter
+        self.child_left = None
+        self.child_right = None
+        self.node_data = letter
 
 
 # create the nodes for the tree
 root = Node('A')
-root.childleft = Node('B')
-root.childright = Node('C')
-root.childleft.childleft = Node('D')
-root.childleft.childright = Node('E')
+root.child_left = Node('B')
+root.child_right = Node('C')
+root.child_left.child_left = Node('D')
+root.child_left.child_right = Node('E')
