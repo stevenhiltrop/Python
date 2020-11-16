@@ -6,8 +6,10 @@ def ss(number_list, n):
             break
     return found
 
+
 numbers = range(0, 100)
+print(f"size of numbers: {len(numbers)}")
 s1 = ss(numbers, 2)
-print(s1)
+print(f"2 in numbers? {s1}")
 s2 = ss(numbers, 202)
-print(s2)
+print(f"202 in numbers? {s2}")
