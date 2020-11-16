@@ -20,16 +20,15 @@ class Stack:
 
 
 stack = Stack()
-print(stack.is_empty())
+print(f"empty? {stack.is_empty()}")
 
 stack.push(1)
-print(stack.is_empty())
+print(f"empty after push? {stack.is_empty()}")
 
-item = stack.pop()
-print(item)
-print(stack.is_empty())
+stack.pop()
+print(f"empty after pop? {stack.is_empty()}")
 
 for i in range(0, 6):
     stack.push(i)
-print(stack.peek())
-print(stack.size())
+print(f"peek? {stack.peek()}")
+print(f"size? {stack.size()}")
