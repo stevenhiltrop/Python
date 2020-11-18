@@ -32,3 +32,8 @@ class Core(Subject):
     def temperature(self, temperature):
         self._temperature = temperature
         Subject.notify(self)
+
+
+class Observer:
+    def update(self, subject):
+        print(f"Observer {subject._name} has temperature {subject._temperature}")
