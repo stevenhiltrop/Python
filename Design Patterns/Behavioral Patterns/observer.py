@@ -3,7 +3,8 @@ class Subject:
         self._observers = list()
 
     def attach(self, observer):
-        self._observers.append(observer)
+        if observer not in self._observers:
+            self._observers.append(observer)
 
     def detach(self, observer):
         try:
@@ -13,7 +14,8 @@ class Subject:
 
     def notify(self, modifier=None):
         for observer in self._observers:
-            pass
+            if modifier != observer:
+                observer.update()
 
 
 class Core(Subject):
