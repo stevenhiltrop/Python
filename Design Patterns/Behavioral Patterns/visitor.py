@@ -1,6 +1,6 @@
 class House:
     def accept(self, visitor):
-        pass
+        visitor.visit(self)
 
     def work_on_hvac(self, hvac_specialist):
         print(f"{self} worked on by {hvac_specialist}")
@@ -25,3 +25,9 @@ class HVACSpecialist(Visitor):
 class Electrician(Visitor):
     def visit(self, house):
         house.work_on_electricity(self)
+
+
+hvac_specialist = HVACSpecialist()
+electrician = Electrician()
+house = House()
+house.accept(hvac_specialist)
