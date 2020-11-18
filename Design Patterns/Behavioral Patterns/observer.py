@@ -15,7 +15,7 @@ class Subject:
     def notify(self, modifier=None):
         for observer in self._observers:
             if modifier != observer:
-                observer.update()
+                observer.update(self)
 
 
 class Core(Subject):
@@ -37,3 +37,16 @@ class Core(Subject):
 class Observer:
     def update(self, subject):
         print(f"Observer {subject._name} has temperature {subject._temperature}")
+
+
+core1 = Core("Core 1")
+core2 = Core("Core 2")
+
+observer1 = Observer()
+observer2 = Observer()
+
+core1.attach(observer1)
+core1.attach(observer2)
+
+core1.temperature = 80
+core1.temperature = 90
